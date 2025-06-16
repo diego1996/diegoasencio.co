@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Diego Asencio | Sr Full-Stack Software Engineer</title>
+  <link rel="icon" href="favicon.ico">
+  <style>
+    /* ========== Variables ========== */
+    :root{
+      --primary:#2563eb;--primary-light:#3b82f6;--primary-dark:#1e40af;
+      --bg:#f5f7fa;--bg-alt:#fff;--text:#333;--text-light:#64748b;
+      --accent:#ff6363;--radius:1rem;
+      --shadow-sm:0 2px 6px rgba(0,0,0,.06);
+      --shadow-md:0 6px 18px rgba(0,0,0,.08);
+      --font-sans:"Inter",system-ui,sans-serif;
+      --trs:.35s cubic-bezier(.25,.8,.25,1);
+    }
+    [data-theme=dark]{
+      --bg:#111827;--bg-alt:#1f2937;--text:#e2e8f0;--text-light:#9ca3af;
+      --primary:#90cdf4;--primary-light:#b2f5ea;--primary-dark:#2b6cb0;--accent:#f6ad55;
+      --shadow-sm:0 2px 8px rgba(0,0,0,.35);--shadow-md:0 6px 22px rgba(0,0,0,.45)
+    }
+    /* ========== Reset ========== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;transition:var(--trs)}
+    html{scroll-behavior:smooth;font-family:var(--font-sans)}
+    body{background:var(--bg);color:var(--text)}
+    img{max-width:100%;display:block}
+    a{color:var(--primary);font-weight:500;text-decoration:none}
+    a:hover{color:var(--accent)}
+    .container{max-width:1200px;margin:auto;padding:0 1.25rem}
+
+    /* ========== Utilities ========== */
+    .section{padding:4rem 0}@media(min-width:1024px){.section{padding:5rem 0}}
+    h2{font-size:2.25rem;text-align:center;color:var(--primary-dark);margin-bottom:1.5rem}
+    h2::after{content:'';width:64px;height:3px;margin:.6rem auto 0;background:var(--accent);display:block;border-radius:2px}
+
+    /* ================================= HERO ================================= */
+    header{position:relative;height:100vh;background:url('https://github.com/diego1996.png') center/cover fixed;
+      display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+    header::before{
+      content:'';position:absolute;inset:0;
+      /* dynamic gradient based on theme */
+      background:linear-gradient(135deg, var(--primary), var(--primary-light));
+    }
+    .hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+    .profile-pic{width:170px;height:170px;border-radius:50%;border:4px solid #fff;object-fit:cover;box-shadow:0 8px 28px rgba(0,0,0,.4)}
+    .hero-content h1{font-size:3rem;font-weight:700;color:#fff}
+    .typewriter{overflow:hidden;border-right:.15em solid #fff;white-space:nowrap;width:0;
+      animation:typing 3s steps(32,end) .3s forwards,blink-caret .8s step-end infinite .3s;font-size:1.15rem;color:#fff}
+    .btn-cta{display:inline-block;padding:.8rem 2rem;background:#fff;color:var(--primary-dark);
+      border-radius:var(--radius);font-weight:600}
+
+    /* ========= PANEL ========= */
+    .access-panel{position:fixed;bottom:1rem;left:1rem;z-index:50;display:flex;gap:.4rem}
+    .access-panel button,.access-panel select{padding:.55rem .75rem;border:none;border-radius:.45rem;font-size:.9rem;
+      background:var(--primary-dark);color:#fff;box-shadow:var(--shadow-sm)}
+    .access-panel button:hover,.access-panel select:hover{background:var(--accent)}
+
+    /* ================================= ABOUT ================================= */
+    #about{background:var(--bg-alt)}
+    .about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1rem;align-items:center}
+    .about-image{display:flex;justify-content:center;perspective:800px}
+    .about-image img{border-radius:var(--radius);box-shadow:var(--shadow-md);transform:rotateY(-8deg) rotateX(3deg);transition:transform .45s}
+    .about-image img:hover{transform:rotateY(0) rotateX(0) scale(1.05)}
+    .about-card{background:rgba(255,255,255,.55);backdrop-filter:blur(9px) saturate(150%);
+      border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:2rem 2.2rem}
+    [data-theme=dark] .about-card{background:rgba(31,41,55,.55)}
+    .about-text p{font-size:1.05rem;line-height:1.6;margin-bottom:.9rem;color:var(--text-light);position:relative;padding-left:1.4rem}
+    .about-text p::before{content:'▹';position:absolute;left:0;color:var(--accent)}
+
+    /* ================================= SKILLS ================================= */
+    .skills-grid{display:grid;gap:1rem;margin-top:2rem;grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+    @media(min-width:1160px){.skills-grid{grid-template-columns:repeat(7,1fr)}}
+    .skill{background:var(--bg-alt);border-radius:.8rem;padding:1rem .5rem;box-shadow:var(--shadow-sm);
+      display:flex;flex-direction:column;align-items:center;gap:.5rem}
+    .skill-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(145deg,rgba(37,99,235,.12),rgba(37,99,235,.05))}
+    .skill p{font-size:.9rem;font-weight:500}
+
+    /* ======================== CERTIFICATIONS ======================== */
+    .certs-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;justify-items:center;margin-top:1rem}
+    .badge{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1rem;
+      background:var(--bg-alt);color:var(--text);border:2px solid var(--primary);border-radius:var(--radius);
+      box-shadow:var(--shadow-sm);transition:transform var(--trs)}
+    .badge:hover{transform:translateY(-4px)}
+    .badge img{width:80px;height:80px}
+    .badge .year{font-size:.85rem;color:var(--text-light)}
+
+    /* ================ EDUCATION & EXPERIENCE TIMELINE ================ */
+    .timeline{position:relative;margin-top:1.5rem;padding-left:2rem}
+    .timeline::before{content:'';position:absolute;left:1rem;top:0;bottom:0;width:2px;background:var(--accent)}
+    .entry-card{position:relative;display:flex;gap:1rem;align-items:center;background:var(--bg-alt);
+      padding:1rem 1.2rem;border-radius:.9rem;box-shadow:var(--shadow-sm);margin-bottom:2rem}
+    .entry-card::before{content:'';position:absolute;left:-1rem;top:1.2rem;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+    .entry-card img{flex:0 0 52px;height:52px;border-radius:50%;object-fit:cover}
+    .entry-card .info h3{font-size:1.05rem;color:var(--primary-dark)}
+    .entry-card .info span{font-size:.85rem;color:var(--text-light)}
+    .entry-card .info p{font-size:.85rem;color:var(--text-light);margin-top:.4rem}
+
+    /* ================================= PROJECTS ================================= */
+    .projects-grid{margin-top:2rem;display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .project-card{background:var(--bg-alt);border-radius:1rem;box-shadow:var(--shadow-md);
+      overflow:hidden;display:flex;flex-direction:column;transition:transform var(--trs)}
+    .project-card:hover{transform:translateY(-4px)}
+    .project-card img{width:100%;aspect-ratio:16/9;object-fit:cover}
+    .project-content{padding:1.2rem}
+    .project-content h3{font-size:1.15rem;color:var(--primary-dark);margin-bottom:.4rem}
+    .project-content p{font-size:.9rem;color:var(--text-light);margin-bottom:.8rem}
+    .project-content a{font-weight:600}
+
+    /* ================================= CONTACT ================================= */
+    #contact{width:100vw;margin-left:calc(-50vw + 50%);background:var(--primary-dark);
+      color:#f3f6ff;text-align:center;padding:4rem 1.5rem;transition:background var(--trs)}
+    #contact p{max-width:680px;margin:.8rem auto 2.2rem;font-size:1.05rem;line-height:1.6}
+    #contact .btn-cta{background:#f7f9ff;color:var(--primary-dark);box-shadow:0 4px 16px rgba(0,0,0,.25)}
+    #contact .btn-cta:hover{transform:translateY(-3px)}
+    #contact h2{color:#fff}
+
+    /* ================================= FOOTER ================================= */
+    footer{background:var(--primary-dark);color:#c3d1ff;padding:2.5rem 1rem;text-align:center;transition:background var(--trs)}
+    .socials{display:flex;justify-content:center;gap:1rem;margin-bottom:1rem}
+    .socials a{display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center;
+      border-radius:50%;background:rgba(255,255,255,.08)}
+    .socials svg{fill:#c3d1ff;width:22px;height:22px;transition:fill .25s}
+    .socials a:hover svg{fill:#fff}
+    .credits{font-size:.82rem}
+
+    /* ========== Keyframes ========== */
+    @keyframes typing{from{width:0}to{width:100%}}
+    @keyframes blink-caret{from,to{border-color:transparent}50%{border-color:#fff}}
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <header>
+    <div class="hero-content">
+      <img class="profile-pic" src="https://github.com/diego1996.png" alt="Diego Asencio">
+      <h1 id="hero-title"></h1>
+      <div class="typewriter" id="hero-sub"></div>
+      <a href="#about" class="btn-cta" id="hero-cta"></a>
+    </div>
+  </header>
+
+  <!-- PANEL -->
+  <div class="access-panel">
+    <select id="lang-switch"><option value="es">ES</option><option value="en">EN</option></select>
+    <button id="theme-switch">🌙</button>
+    <button id="font-decrease">A-</button>
+    <button id="font-increase">A+</button>
+  </div>
+
+  <!-- MAIN -->
+  <main class="container">
+    <section id="about" class="section reveal">
+      <h2 id="about-title" data-ty></h2>
+      <div class="about-grid" id="about-content"></div>
+    </section>
+    <section id="skills" class="section reveal">
+      <h2 id="skills-title" data-ty></h2>
+      <div class="skills-grid" id="skills-content"></div>
+    </section>
+    <section id="certifications" class="section reveal">
+      <h2 id="cert-title" data-ty></h2>
+      <div class="certs-wrap" id="cert-content"></div>
+    </section>
+    <section id="education" class="section reveal">
+      <h2 id="edu-title" data-ty></h2>
+      <div class="timeline" id="edu-content"></div>
+    </section>
+    <section id="experience" class="section reveal">
+      <h2 id="exp-title" data-ty></h2>
+      <div class="timeline" id="exp-content"></div>
+    </section>
+    <section id="projects" class="section reveal">
+      <h2 id="proj-title" data-ty></h2>
+      <div class="projects-grid" id="proj-content"></div>
+    </section>
+    <section id="contact" class="section reveal">
+      <h2 id="contact-title" data-ty></h2>
+      <p id="contact-desc" data-ty></p>
+      <a href="mailto:diego@example.com" class="btn-cta" id="contact-btn" data-ty></a>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="socials">
+      <a href="https://github.com/diego1996" target="_blank" aria-label="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.3-1.1-1.7-1.1-1.7-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.7-1.4-2.6-.3-5.4-1.3-5.4-5.6 0-1.2.5-2.2 1.1-3-.1-.3-.5-1.5.1-3 0 0 1-.3 3 1.1a10.6 10.6 0 0 1 5.4 0c2-1.4 3-1.1 3-1.1.6 1.5.2 2.7.1 3a5 5 0 0 1 1.1 3c0 4.3-2.8 5.3-5.5 5.6.4.4.7 1 .7 2v3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"></path></svg>
+      </a>
+      <a href="https://linkedin.com/in/diego1996" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.63v-5.59c0-1.33-.02-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14 2.95v5.69h-3.63V9h3.48v1.56h.05c.49-.93 1.7-1.9 3.5-1.9 3.75 0 4.45 2.47 4.45 5.67v6.12zM5.34 7.43a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM6.85 20.45H3.8V9h3.05zM22.23 0H1.77C.79 0 0 .78 0 1.75v20.49C0 23.22.79 24 1.77 24h20.46c.98 0 1.77-.78 1.77-1.76V1.75C24 .78 23.21 0 22.23 0z"></path></svg>
+      </a>
+    </div>
+    <p class="credits" id="footer-text"></p>
+  </footer>
+
+  <script>
+      /* ---------- Data ---------- */
+    const data = {
+      es: {
+        hero: {
+          title: 'Diego Asencio',
+          sub: 'Ingeniero de Sistemas │ Especialista en Ingeniería de Software │ Sr Full-Stack Engineer',
+          cta: 'Conóceme más'
+        },
+        about: {
+          title: 'Sobre mí',
+          items: [
+            'Ingeniero de Sistemas con 7+ años creando soluciones de alto impacto.',
+            'Especialista en Clean Architecture, microservicios, DevOps y ciberseguridad.',
+            'Experiencia en e-commerce (MercadoLibre), fintech & blockchain (Splendor).',
+            'Apasionado por optimizar rendimiento y garantizar escalabilidad.'
+          ]
+        },
+        edu: {
+          title: 'Educación',
+          items: [
+            {
+              deg: 'Ingeniería de Sistemas',
+              inst: 'Universidad de los Llanos',
+              period: '2013-2020',
+              logo: 'https://repositorio.unillanos.edu.co/server/api/core/bitstreams/75c5fc59-8833-4dce-afbb-708f39abd595/content'
+            },
+            {
+              deg: 'Especialización en Ing. de Software',
+              inst: 'Universidad de los Llanos',
+              period: '2021-2022',
+              logo: 'https://repositorio.unillanos.edu.co/server/api/core/bitstreams/75c5fc59-8833-4dce-afbb-708f39abd595/content'
+            }
+          ]
+        },
+        cert: {
+          title: 'Certificaciones',
+          items: [
+            {
+              name: 'Scrum Master',
+              org: 'CertiProf',
+              year: '2023',
+              logo: 'https://certiprof.com/cdn/shop/files/Certiprof_Scrum_Master_badge480x480_1440x1440.webp?v=1742418498'
+            }
+          ]
+        },
+        skills: {
+          title: 'Habilidades Técnicas',
+          items: [
+            { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+            { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+            { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+            { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+            { name: 'VueJS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+            { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+            { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+            { name: 'Nest.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg' },
+            { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+            { name: 'FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-plain.svg' },
+            { name: 'Django', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
+            { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+            { name: 'Kotlin', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+            { name: 'Golang', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
+            { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+            { name: 'AWS', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1024px-Amazon_Web_Services_Logo.svg.png' },
+            { name: 'SonarQube', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sonarqube/sonarqube-original.svg' },
+            { name: 'Grafana', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg' },
+            { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' }
+          ]
+        },
+        exp: {
+          title: 'Experiencia',
+          items: [
+            {
+              role: 'Sr Software Engineer',
+              org: 'MercadoLibre',
+              period: '2024 - Actualidad',
+              logo: 'https://media.licdn.com/dms/image/v2/D4D0BAQGBWvG8qkeDWA/company-logo_100_100/B4DZUUsRzCGcAU-/0/1739808906936/mercadolibre_logo?e=1754524800&v=beta&t=DBFVzM-dHjuicRPOnsV_mhcGvB0tKaAemVeFGLVGSUc',
+              desc: 'Microservicios a escala para +50 M usuarios.'
+            },
+            {
+              role: 'Software Technical Leader',
+              org: 'Binkio',
+              period: '2024 - 2025',
+              logo: 'https://media.licdn.com/dms/image/v2/D4E0BAQEFODodj8o0mw/company-logo_100_100/company-logo_100_100/0/1706795077220?e=1754524800&v=beta&t=4QuCQBD7CXVpKp7DU5MRRXa6tiUI9cLXUedjxnqQwf8',
+              desc: 'Blockchain y Real World Assets.'
+            },
+            {
+              role: 'Sr Backend Engineer / Blockchain Engineer',
+              org: 'Splendor Labs',
+              period: '2023 - Actualidad',
+              logo: 'https://www.splendor.org/static/favicon.png',
+              desc: 'Proyectos de Software Web3 y Blockchain con Nodos validadores y monitoreo a escala.'
+            },
+            {
+              role: 'Sr Fullstack Developer',
+              org: 'Rurall',
+              period: '2023 - 2024',
+              logo: 'https://media.licdn.com/dms/image/v2/C4E0BAQGj1P-7BmspBg/company-logo_100_100/company-logo_100_100/0/1662469714224?e=1754524800&v=beta&t=CnLZ_9nD-CRDhWWRi_cE8crzIBJKg20FMn2YMpHrFRk',
+              desc: 'Plataforma de logística para productores rurales.'
+            },
+            {
+              role: 'Ssr Software Engineer',
+              org: 'MercadoLibre',
+              period: '2021 - 2023',
+              logo: 'https://media.licdn.com/dms/image/v2/D4D0BAQGBWvG8qkeDWA/company-logo_100_100/B4DZUUsRzCGcAU-/0/1739808906936/mercadolibre_logo?e=1754524800&v=beta&t=DBFVzM-dHjuicRPOnsV_mhcGvB0tKaAemVeFGLVGSUc',
+              desc: 'Microservicios a escala para +50 M usuarios.'
+            },
+            {
+              role: 'Backend Developer',
+              org: 'Rappi',
+              period: '2019 - 2021',
+              logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIa7grF6DG3PEtibFiRs2VIagg22hSlz0fhg&s',
+              desc: 'Optimización del algoritmo de asignación de órdenes y repartidores.'
+            }
+          ]
+        },
+        proj: {
+          title: 'Proyectos Destacados',
+          items: [
+            {
+              title: 'Linklytics.online',
+              img: 'https://i.imgur.com/s7g4fI4.jpg',
+              desc: 'Plataforma SaaS para analítica avanzada de enlaces y atribución.',
+              url: 'https://linklytics.online'
+            },
+            {
+              title: 'ASICADH',
+              img: 'https://i.imgur.com/NanY1q9.jpg',
+              desc: 'Sistema de gestión de pacientes (ONG El Salvador).',
+              url: 'https://asicadh.org'
+            },
+            {
+              title: 'BitLink',
+              img: 'https://i.imgur.com/dlFBD9y.jpg',
+              desc: 'Acortador de URLs + panel estadístico.',
+              url: 'https://bitlink.com.co'
+            },
+            {
+              title: 'Sorteazo',
+              img: 'https://raw.githubusercontent.com/diego1996/sorteazo/main/screenshot.png',
+              desc: 'Plataforma de rifas Django + JS.',
+              url: 'https://github.com/diego1996/sorteazo'
+            }
+          ]
+        },
+        contact: {
+          title: 'Contáctame',
+          desc: '¿Tienes un proyecto en mente o quieres colaborar? ¡Escríbeme!',
+          btn: 'Enviar correo'
+        },
+        footer: '© 2025 Diego Asencio. Todos los derechos reservados.'
+      },
+      en: {
+        hero: {
+          title: 'Diego Asencio',
+          sub: 'Systems Engineer │ Software Engineering Specialist │ Sr Full-Stack Engineer',
+          cta: 'Learn More'
+        },
+        about: {
+          title: 'About Me',
+          items: [
+            'Systems Engineer with 7+ years creating high-impact solutions.',
+            'Specialist in Clean Architecture, microservices, DevOps, and cybersecurity.',
+            'Experience in e-commerce (MercadoLibre), fintech & blockchain (Splendor).',
+            'Passionate about optimizing performance and ensuring scalability.'
+          ]
+        },
+        edu: {
+          title: 'Education',
+          items: [
+            {
+              deg: 'Systems Engineering',
+              inst: 'University of the Llanos',
+              period: '2013-2020',
+              logo: 'https://repositorio.unillanos.edu.co/server/api/core/bitstreams/75c5fc59-8833-4dce-afbb-708f39abd595/content'
+            },
+            {
+              deg: 'Specialization in Software Engineering',
+              inst: 'University of the Llanos',
+              period: '2021-2022',
+              logo: 'https://repositorio.unillanos.edu.co/server/api/core/bitstreams/75c5fc59-8833-4dce-afbb-708f39abd595/content'
+            }
+          ]
+        },
+        cert: {
+          title: 'Certifications',
+          items: [
+            {
+              name: 'Scrum Master',
+              org: 'CertiProf',
+              year: '2023',
+              logo: 'https://certiprof.com/cdn/shop/files/Certiprof_Scrum_Master_badge480x480_1440x1440.webp?v=1742418498'
+            }
+          ]
+        },
+        skills: {
+          title: 'Technical Skills',
+          items: [
+            { name: 'HTML', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+            { name: 'CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+            { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+            { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+            { name: 'VueJS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+            { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+            { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+            { name: 'Nest.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg' },
+            { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+            { name: 'FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-plain.svg' },
+            { name: 'Django', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
+            { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+            { name: 'Kotlin', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+            { name: 'Golang', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
+            { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+            { name: 'AWS', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1024px-Amazon_Web_Services_Logo.svg.png' },
+            { name: 'SonarQube', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sonarqube/sonarqube-original.svg' },
+            { name: 'Grafana', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg' },
+            { name: 'Linux', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' }
+          ]
+        },
+        exp: { /* misma estructura traducida para experiencia */ },
+        proj: { /* misma estructura traducida para proyectos */ },
+        contact: {
+          title: 'Contact Me',
+          desc: 'Have a project in mind or want to collaborate? Reach out!',
+          btn: 'Send Email'
+        },
+        footer: '© 2025 Diego Asencio. All rights reserved.'
+      }
+    };
+    
+    /* ---------- Helpers ---------- */
+    const $ = id => document.getElementById(id);
+    
+    /* ---------- Render ---------- */
+    function render(lang = 'es') {
+      const d = data[lang];
+    
+      $('hero-title').textContent = d.hero.title;
+      $('hero-sub').textContent   = d.hero.sub;
+      $('hero-cta').textContent   = d.hero.cta;
+    
+      $('about-title').textContent      = d.about.title;
+      $('about-content').innerHTML      = `
+        <div class="about-image">
+          <img src="https://github.com/diegoasencio96.png" alt="Diego Asencio">
+        </div>
+        <div class="about-card">
+          <div class="about-text">
+            ${d.about.items.map(t => `<p data-ty>${t}</p>`).join('')}
+          </div>
+        </div>`;
+    
+      $('skills-title').textContent      = d.skills.title;
+      $('skills-content').innerHTML      = d.skills.items.map(s => `
+        <div class="skill">
+          <div class="skill-icon">
+            <img src="${s.icon}" alt="${s.name}">
+          </div>
+          <p data-ty>${s.name}</p>
+        </div>
+      `).join('');
+    
+      $('cert-title').textContent        = d.cert.title;
+      $('cert-content').innerHTML        = d.cert.items.map(c => `
+        <span class="badge">
+          <img src="${c.logo}" alt="${c.name}">
+          <div>${c.name}</div>
+          <div class="year">${c.year}</div>
+        </span>
+      `).join('');
+    
+      $('edu-title').textContent         = d.edu.title;
+      $('edu-content').innerHTML         = d.edu.items.map(e => `
+        <div class="entry-card">
+          <img src="${e.logo}" alt="${e.inst}">
+          <div class="info">
+            <h3 data-ty>${e.deg}</h3>
+            <span data-ty>${e.inst} | ${e.period}</span>
+          </div>
+        </div>
+      `).join('');
+    
+      $('exp-title').textContent         = d.exp.title;
+      $('exp-content').innerHTML         = d.exp.items.map(e => `
+        <div class="entry-card">
+          <img src="${e.logo}" alt="${e.org}">
+          <div class="info">
+            <h3 data-ty>${e.role}</h3>
+            <span data-ty>${e.org} | ${e.period}</span>
+            <p data-ty>${e.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    
+      $('proj-title').textContent        = d.proj.title;
+      $('proj-content').innerHTML        = d.proj.items.map(p => `
+        <div class="project-card">
+          <img src="${p.img}" alt="${p.title}">
+          <div class="project-content">
+            <h3 data-ty>${p.title}</h3>
+            <p data-ty>${p.desc}</p>
+            <a href="${p.url}" target="_blank" data-ty>Visitar →</a>
+          </div>
+        </div>
+      `).join('');
+    
+      $('contact-title').textContent     = d.contact.title;
+      $('contact-desc').textContent      = d.contact.desc;
+      $('contact-btn').textContent       = d.contact.btn;
+      $('footer-text').textContent       = d.footer;
+    }
+    
+    render();
+    
+    /* ---------- Typewriter + Reveal ---------- */
+    function typewrite(el, speed = 18) {
+      const txt = el.textContent;
+      el.textContent = '';
+      [...txt].forEach((c, i) => setTimeout(() => el.textContent += c, i * speed));
+    }
+    
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('active');
+          e.target.querySelectorAll('[data-ty]').forEach(t => {
+            if (!t.dataset.done) {
+              typewrite(t);
+              t.dataset.done = 1;
+            }
+          });
+        }
+      });
+    }, { threshold: 0.15 });
+    
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    
+    /* ---------- Controls ---------- */
+    $('lang-switch').addEventListener('change', e => render(e.target.value));
+    
+    $('theme-switch').addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      $('theme-switch').textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+    
+    $('font-increase').addEventListener('click', () => {
+      const fs = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      document.documentElement.style.fontSize = (fs + 1) + 'px';
+    });
+    
+    $('font-decrease').addEventListener('click', () => {
+      const fs = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      document.documentElement.style.fontSize = (fs - 1) + 'px';
+    });
+
+  </script>
+</body>
+</html>
