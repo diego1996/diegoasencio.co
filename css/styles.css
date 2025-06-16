@@ -994,7 +994,7 @@ footer {
 @media (max-width: 600px) {
   .timeline {
     position: relative;
-    padding: 0;
+    padding: 2rem 0;
     margin: 0;
   }
 
@@ -1002,43 +1002,48 @@ footer {
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
+    height: 100%;
     background: var(--primary-light);
     opacity: 0.3;
   }
 
   .entry-card {
     position: relative;
-    width: 90%;
-    margin: 0 auto 1.5rem;
-    padding: 1.2rem;
+    width: 85%;
+    margin: 2rem auto;
+    padding: 1.5rem;
     background: var(--bg-alt);
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
-    border-left: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .entry-card::before {
     content: '';
     position: absolute;
     left: 50%;
-    top: 0;
-    transform: translate(-50%, -50%);
-    width: 16px;
-    height: 16px;
+    top: -1rem;
+    transform: translateX(-50%);
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     background: var(--primary);
     border: 3px solid var(--bg-alt);
     box-shadow: 0 0 0 2px var(--primary-light);
+    z-index: 2;
   }
 
   .entry-card .logo-container {
     position: relative;
-    width: 45px;
-    height: 45px;
-    margin: 0.5rem auto 0.8rem;
-    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    margin: 0.5rem auto 1rem;
+    border-radius: 15px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
+    border: 2px solid var(--primary-light);
   }
 
   .entry-card .logo-container img {
@@ -1048,34 +1053,40 @@ footer {
   }
 
   .entry-card .info {
-    padding: 0;
+    width: 100%;
     text-align: center;
+    padding: 0;
   }
 
   .entry-card .info h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.3rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
     color: var(--primary-dark);
+    font-weight: 600;
   }
 
   .entry-card .info span {
     display: block;
     font-size: 0.9rem;
     color: var(--text-light);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
   }
 
   .entry-card .info p {
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--text);
     text-align: left;
+    background: var(--bg);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
   }
 
   /* Ajustes para el modo oscuro */
   [data-theme=dark] .entry-card {
     background: var(--bg-alt);
-    border-left-color: var(--primary);
   }
 
   [data-theme=dark] .entry-card::before {
@@ -1085,6 +1096,10 @@ footer {
 
   [data-theme=dark] .entry-card .info h3 {
     color: var(--primary-light);
+  }
+
+  [data-theme=dark] .entry-card .info p {
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .skill, .badge, .entry-card, .project-card {
