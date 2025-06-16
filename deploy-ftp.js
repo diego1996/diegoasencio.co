@@ -1,69 +1,47 @@
-// Script de deploy por FTP para Hostgator
-// Requiere: npm install basic-ftp
-const ftp = require('basic-ftp')
-const path = require('path')
-const fs = require('fs')
+#!/usr/bin/env node
+/**
+ * deploy.js
+ * Script de despliegue FTP usando ftp-deploy
+ * Instalar dependencia: npm install --save-dev ftp-deploy
+ * Ejecutar: node deploy.js
+ */
 
-const FTP_HOST = 'ftp.asicadh.org'
-const FTP_USER = 'asicadho'
-const FTP_PASS = process.env.FTP_PASS || '' // Mejor usar variable de entorno
-const FTP_PORT = 21
-const REMOTE_DIR = '/diegoasencio.co'
+const FtpDeploy = require('ftp-deploy');
+const ftpDeploy = new FtpDeploy();
 
-const PUBLIC_FILES = [
-  'index.html',
-  'css',
-  'js',
-  'assets' // si existe
-]
+const config = {
+  user: 'deploy@asicadh.org',
+  password: process.env.FTP_PASSWORD || 'Sup3rP455w0rd.',
+  host: 'ftp.asicadh.org',
+  port: 21,
+  localRoot: __dirname + '',
+  remoteRoot: 'diegoasencio.co',
+  include: ['*', '**/*'],
+  exclude: ['node_modules/**', '.git/**', '.github/**', '*.ps1', 'package-lock.json', 'deploy-ftp.js']
+};
 
-async function uploadDir(client, localDir, remoteDir) {
-  const items = fs.readdirSync(localDir)
-  for (const item of items) {
-    const localPath = path.join(localDir, item)
-    const remotePath = remoteDir + '/' + item
-    const stats = fs.statSync(localPath)
-    if (item.startsWith('.')) continue // Ignorar archivos ocultos
-    if (stats.isDirectory()) {
-      try { await client.ensureDir(remotePath) } catch {}
-      await uploadDir(client, localPath, remotePath)
-    } else {
-      await client.uploadFrom(localPath, remotePath)
-      console.log('Subido:', remotePath)
-    }
-  }
-}
+console.log(`Desplegando a ftp://${config.host}/${config.remoteRoot}`);
 
-async function main() {
-  const client = new ftp.Client()
-  client.ftp.verbose = true
-  try {
-    await client.access({
-      host: FTP_HOST,
-      user: FTP_USER,
-      password: FTP_PASS,
-      port: FTP_PORT,
-      secure: false // Cambia a true si tu hosting requiere FTPS
-    })
-    await client.ensureDir(REMOTE_DIR)
-    for (const file of PUBLIC_FILES) {
-      if (fs.existsSync(file)) {
-        const localPath = path.resolve(file)
-        const remotePath = REMOTE_DIR + '/' + path.basename(file)
-        if (fs.statSync(file).isDirectory()) {
-          await client.ensureDir(remotePath)
-          await uploadDir(client, localPath, remotePath)
-        } else {
-          await client.uploadFrom(localPath, remotePath)
-          console.log('Subido:', remotePath)
-        }
-      }
-    }
-    console.log('¡Deploy por FTP completado!')
-  } catch (err) {
-    console.error('Error en deploy FTP:', err)
-  }
-  client.close()
-}
+// Eventos adicionales para debug
+ftpDeploy.on('uploaded', function(data) {
+  console.log(`✅ Subido: ${data.filename} -> ${config.remoteRoot}/${data.filename}`);
+});
+ftpDeploy.on('upload-error', function(err, data) {
+  console.error(`❌ Error al subir ${data.filename}:`, err);
+});
 
-main() 
+ftpDeploy.on('uploading', function(data) {
+  console.log(`Subiendo: ${data.filename}`);
+});
+
+ftpDeploy.on('completed', function() {
+  console.log('¡Despliegue completado exitosamente!');
+});
+
+ftpDeploy.on('error', function(err) {
+  console.error('Error en deploy:', err);
+});
+
+ftpDeploy.deploy(config)
+  .then(() => console.log('Deploy finalizado.'))
+  .catch(err => console.error('Error en deploy:', err)); 

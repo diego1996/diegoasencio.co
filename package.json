@@ -1,0 +1,34 @@
+{
+  "name": "diegoasencio.co",
+  "version": "1.0.0",
+  "description": "Landing page for Personal CV Tech",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node deploy-ftp.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diego1996/diegoasencio.co.git"
+  },
+  "keywords": [
+    "web",
+    "landing",
+    "CV",
+    "frotnend",
+    "IA",
+    "html",
+    "css",
+    "js"
+  ],
+  "author": "Diego A Asencio C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diego1996/diegoasencio.co/issues"
+  },
+  "homepage": "https://github.com/diego1996/diegoasencio.co#readme",
+  "dependencies": {
+    "basic-ftp": "^5.0.5",
+    "ftp-deploy": "^2.4.7"
+  }
+}
