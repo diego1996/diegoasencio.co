@@ -992,25 +992,101 @@ footer {
 }
 
 @media (max-width: 600px) {
-  .entry-card .logo-container {
-    width: 28px;
-    height: 28px;
-    border-width: 1.5px;
+  .timeline {
+    position: relative;
+    padding: 0;
+    margin: 0;
   }
-  .entry-card .logo-container img {
-    width: 22px !important;
-    height: 22px !important;
+
+  .timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: var(--primary-light);
+    opacity: 0.3;
   }
-  #education .logo-container, #edu-content .logo-container {
-    left: -22px;
-    width: 38px;
-    height: 38px;
-    padding: 3px;
-  }
+
   .entry-card {
-    margin-left: 10px;
-    padding-left: 1.7rem;
+    position: relative;
+    width: 90%;
+    margin: 0 auto 1.5rem;
+    padding: 1.2rem;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary);
   }
+
+  .entry-card::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid var(--bg-alt);
+    box-shadow: 0 0 0 2px var(--primary-light);
+  }
+
+  .entry-card .logo-container {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    margin: 0.5rem auto 0.8rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .entry-card .logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .entry-card .info {
+    padding: 0;
+    text-align: center;
+  }
+
+  .entry-card .info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    color: var(--primary-dark);
+  }
+
+  .entry-card .info span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .entry-card .info p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text);
+    text-align: left;
+  }
+
+  /* Ajustes para el modo oscuro */
+  [data-theme=dark] .entry-card {
+    background: var(--bg-alt);
+    border-left-color: var(--primary);
+  }
+
+  [data-theme=dark] .entry-card::before {
+    background: var(--primary);
+    border-color: var(--bg-alt);
+  }
+
+  [data-theme=dark] .entry-card .info h3 {
+    color: var(--primary-light);
+  }
+
   .skill, .badge, .entry-card, .project-card {
     padding: 1rem 0.6rem 1rem 0.6rem;
     margin-bottom: 0.7rem;
@@ -1307,33 +1383,80 @@ a:focus-visible, button:focus-visible, select:focus-visible, .btn-cta:focus-visi
   }
 
   /* Timeline y Cards */
+  .timeline {
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+
+  .timeline::before {
+    left: 20px;
+    width: 2px;
+    background: var(--primary-light);
+    opacity: 0.3;
+  }
+
   .entry-card {
-    padding: 1rem;
-    margin-left: 1rem;
+    position: relative;
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+    padding: 1.2rem;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary);
+  }
+
+  .entry-card::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 24px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 3px solid var(--bg-alt);
+    box-shadow: 0 0 0 2px var(--primary-light);
   }
 
   .entry-card .logo-container {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
+    position: relative;
+    width: 45px;
+    height: 45px;
+    margin: 0 0 0.8rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .entry-card .logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .entry-card .info {
-    padding-left: 0.8rem;
+    padding: 0;
   }
 
   .entry-card .info h3 {
     font-size: 1.1rem;
     margin-bottom: 0.3rem;
+    color: var(--primary-dark);
   }
 
   .entry-card .info span {
+    display: block;
     font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
   }
 
   .entry-card .info p {
     font-size: 0.95rem;
-    margin-top: 0.5rem;
+    line-height: 1.5;
+    color: var(--text);
   }
 
   /* Skills Grid */
